@@ -15,5 +15,21 @@ namespace LiteCommerce.Admin.Controllers
             var model = HRService.Employee_List();
             return View(model);
         }
+        public ActionResult Add()
+        {
+            return View();
+        }
+        public ActionResult Edit(string id)
+        {
+            return View();
+        }
+        public ActionResult Delete(string id)
+        {
+            return View();
+        }
+        public ActionResult Save()
+        {
+            return View();
+        }
     }
 }
