@@ -229,6 +229,10 @@
     <Content Include="Views\Shipper\Add.cshtml" />
     <Content Include="Views\Shipper\Edit.cshtml" />
     <Content Include="Views\Shipper\Delete.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\Add.cshtml" />
+    <Content Include="Views\Customer\Edit.cshtml" />
+    <Content Include="Views\Customer\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -239,7 +243,6 @@
     <Folder Include="Themes\documentation\" />
     <Folder Include="Themes\pages\" />
     <Folder Include="Themes\plugins\" />
-    <Folder Include="Views\Customer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
