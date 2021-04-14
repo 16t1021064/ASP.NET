@@ -13,5 +13,21 @@ namespace LiteCommerce.Admin.Controllers
         {
             return View();
         }
+        public ActionResult Add()
+        {
+            return View();
+        }
+        public ActionResult Edit(string id)
+        {
+            return View();
+        }
+        public ActionResult Delete(string id)
+        {
+            return View();
+        }
+        public ActionResult Save()
+        {
+            return Redirect("Index");
+        }
     }
 }
