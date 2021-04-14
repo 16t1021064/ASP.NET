@@ -1,12 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "Quản lý nhà cung cấp";
+    ViewBag.Title = "Quản lý Loại hàng";
 }
 
 
 <!-- Form để tìm kiếm -->
 <div class="container-fluid">
-    <form method="get" action="~/Supplier/Index">
+    <form method="get" action="~/Category/Index">
         <div class="input-group">
             <input name="searchValue" type="text" class="form-control" placeholder="Nhập tên cần tìm...">
             <div class="input-group-btn">
@@ -20,20 +20,16 @@
 <!-- Danh sách nhà cung cấp -->
 <div class="container-fluid">
     <div class="text-left">
-        <p>Có tất cả <strong>1,024</strong> nhà cung cấp. Bạn đang ở trang <strong>1</strong> trên tổng số <strong>15</strong> trang.</p>
+        <p>Có tất cả <strong>100</strong> loại hàng. Bạn đang ở trang <strong>1</strong> trên tổng số <strong>15</strong> trang.</p>
     </div>
     <table class="table table-bordered table-hover table-striped">
         <thead>
             <tr>
-                <th>Tên nhà cung cấp</th>
-                <th>Tên giao dịch</th>
-                <th>Địa chỉ</th>
-                <th>Quốc gia</th>
-                <th>Thành phố</th>
-                <th>Mã vùng</th>
-                <th>Điện thoại</th>
+                <th>Tên loại hàng</th>
+                <th>Mô tả</th>
+                <th>Thuộc loại hàng</th>
                 <th class="text-right">
-                    <a href="~/Supplier/Add" class="btn btn-xs btn-primary">
+                    <a href="~/Category/Add" class="btn btn-xs btn-primary">
                         <i class="fa fa-plus"></i>
                     </a>
                 </th>
@@ -46,15 +42,11 @@
                     <td>Nord-Ost-Fisch Handelsgesellschaft mbH</td>
                     <td>Sven Petersen</td>
                     <td>Frahmredder 112a</td>
-                    <td>Germany</td>
-                    <td>Cuxhaven</td>
-                    <td>27478</td>
-                    <td>(04721) 8713</td>
                     <td class="text-right">
-                        <a href="~/Supplier/Edit/1234" class="btn btn-xs btn-info">
+                        <a href="~/Category/Edit/1234" class="btn btn-xs btn-info">
                             <i class="fa fa-edit"></i>
                         </a>
-                        <a href="~/Supplier/Delete/1234" class="btn btn-xs btn-danger">
+                        <a href="~/Category/Delete/1234" class="btn btn-xs btn-danger">
                             <i class="fa fa-remove"></i>
                         </a>
                     </td>
