@@ -149,6 +149,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ShipperController.cs" />
@@ -224,6 +225,10 @@
     <Content Include="Views\Category\Add.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Shipper\Index.cshtml" />
+    <Content Include="Views\Shipper\Add.cshtml" />
+    <Content Include="Views\Shipper\Edit.cshtml" />
+    <Content Include="Views\Shipper\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -234,7 +239,7 @@
     <Folder Include="Themes\documentation\" />
     <Folder Include="Themes\pages\" />
     <Folder Include="Themes\plugins\" />
-    <Folder Include="Views\Shipper\" />
+    <Folder Include="Views\Customer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
