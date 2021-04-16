@@ -18,6 +18,14 @@ namespace LiteCommerce.DataLayers.SQLServer
         {
 
         }
+
+        public List<City> List()
+        {
+            return List("");
+        }
+
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -29,9 +37,11 @@ namespace LiteCommerce.DataLayers.SQLServer
             using (SqlConnection cn = GetConnection())
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "select * from Cities";
+                cmd.CommandText = @"select * from Cities 
+                                    where @CountryName = '' Or CountryName = @CountryName";
                 cmd.CommandType = System.Data.CommandType.Text;
                 cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@CountryName", countryName);
                 using (SqlDataReader dbReader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection))
                 {
                     while (dbReader.Read())
