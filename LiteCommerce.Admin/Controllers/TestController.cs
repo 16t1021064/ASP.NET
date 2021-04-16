@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using LiteCommerce.DataLayers;
 using LiteCommerce.DomainModels;
+using System.Configuration;
+using LiteCommerce.DataLayers.SQLServer;
 
 namespace LiteCommerce.Admin.Controllers
 {
@@ -13,7 +15,10 @@ namespace LiteCommerce.Admin.Controllers
         // GET: Test
         public ActionResult Index()
         {
-            return View();
+            string connectionString = ConfigurationManager.ConnectionStrings["LiteCommerceDB"].ConnectionString;
+            ICountryDAL dal = new CountryDAL(connectionString);
+            var data = dal.List();
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }
