@@ -1,0 +1,5 @@
+c:\users\vo huy\documents\visual studio 2015\Projects\LiteCommerce\LiteCommerce.DomainModels\bin\Debug\LiteCommerce.DomainModels.dll
+c:\users\vo huy\documents\visual studio 2015\Projects\LiteCommerce\LiteCommerce.DomainModels\bin\Debug\LiteCommerce.DomainModels.pdb
+c:\users\vo huy\documents\visual studio 2015\Projects\LiteCommerce\LiteCommerce.DomainModels\obj\Debug\LiteCommerce.DomainModels.csprojResolveAssemblyReference.cache
+c:\users\vo huy\documents\visual studio 2015\Projects\LiteCommerce\LiteCommerce.DomainModels\obj\Debug\LiteCommerce.DomainModels.dll
+c:\users\vo huy\documents\visual studio 2015\Projects\LiteCommerce\LiteCommerce.DomainModels\obj\Debug\LiteCommerce.DomainModels.pdb
