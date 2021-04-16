@@ -45,6 +45,7 @@
     <Compile Include="IEmployeeDAL.cs" />
     <Compile Include="ISupplierDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLServer\CountryDAL.cs" />
     <Compile Include="SQLServer\EmployeeDAL.cs" />
     <Compile Include="SQLServer\_BaseDAL.cs" />
   </ItemGroup>
