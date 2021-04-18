@@ -27,6 +27,6 @@ namespace LiteCommerce.Admin.Controllers
             var data = dal.List(page, pageSize, searchValue);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-        // test URL: hTTP://localhost:/Test/Pagination?paeg=2&pageSize=10&SearchValue=
+        // test URL: hTTP://localhost:/Test/Pagination?page=2&pageSize=10&SearchValue=
     }
 }
