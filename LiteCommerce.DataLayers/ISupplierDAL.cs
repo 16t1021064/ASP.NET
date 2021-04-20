@@ -27,7 +27,7 @@ namespace LiteCommerce.DataLayers
         /// <param name="searchValue">giá trị cần tìm theo SupplierName, ContactName, Address, Phone
         /// (chuỗi rỗng nếu không tìm kiếm)</param>
         /// <returns></returns>
-        List<Supplier> List(int page, int pagSize, string searchValue);
+        List<Supplier> List(int page, int pageSize, string searchValue);
         /// <summary>
         /// Đếm số lượng nhà cung cấp thỏa điều kiện tìm kiếm.
         /// </summary>

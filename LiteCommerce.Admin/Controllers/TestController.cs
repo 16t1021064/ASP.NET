@@ -15,15 +15,19 @@ namespace LiteCommerce.Admin.Controllers
         // GET: Test
         public ActionResult Index()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["LiteCommerceDB"].ConnectionString;
-            ICityDAL dal = new CityDAL(connectionString);
+            string connectionstring = ConfigurationManager.ConnectionStrings["litecommercedb"].ConnectionString;
+            ICityDAL dal = new CityDAL(connectionstring);
             var data = dal.List();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Pagination(int page, int pageSize,String searchValue)
         {
+            //string connectionString = ConfigurationManager.ConnectionStrings["LiteCommerceDB"].ConnectionString;
+            //ISupplierDAL dal = new SupplierDAL(connectionString);
+            //var data = dal.List(page, pageSize, searchValue);
+            //return Json(data, JsonRequestBehavior.AllowGet);
             string connectionString = ConfigurationManager.ConnectionStrings["LiteCommerceDB"].ConnectionString;
-            ISupplierDAL dal = new SupplierDAL(connectionString);
+            ICategoryDAL dal = new CategoryDAL(connectionString);
             var data = dal.List(page, pageSize, searchValue);
             return Json(data, JsonRequestBehavior.AllowGet);
         }

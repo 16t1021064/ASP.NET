@@ -23,9 +23,6 @@ namespace LiteCommerce.DataLayers.SQLServer
         {
             return List("");
         }
-
-
-
         /// <summary>
         /// 
         /// </summary>
