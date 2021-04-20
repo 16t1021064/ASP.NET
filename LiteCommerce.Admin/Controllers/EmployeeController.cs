@@ -12,8 +12,8 @@ namespace LiteCommerce.Admin.Controllers
         // GET: Employee
         public ActionResult Index()
         {
-            var model = HRService.Employee_List();
-            return View(model);
+            
+            return View();
         }
         public ActionResult Add()
         {

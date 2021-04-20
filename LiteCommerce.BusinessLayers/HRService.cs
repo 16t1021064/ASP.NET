@@ -33,10 +33,6 @@ namespace LiteCommerce.BusinessLayers
                     throw new Exception("Database type is not supported");
             }
         }
-
-        public static List<Employee> Employee_List()
-        {
-            return EmployeeDB.List();
-        }
+        
     }
 }

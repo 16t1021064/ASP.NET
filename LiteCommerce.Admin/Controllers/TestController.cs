@@ -34,8 +34,12 @@ namespace LiteCommerce.Admin.Controllers
             //IShipperDAL dal = new ShipperDAL(connectionString);
             //var data = dal.List(page, pageSize, searchValue);
             //return Json(data, JsonRequestBehavior.AllowGet);
+            //string connectionString = ConfigurationManager.ConnectionStrings["LiteCommerceDB"].ConnectionString;
+            //ICustomerDAL dal = new CustomerDAL(connectionString);
+            //var data = dal.List(page, pageSize, searchValue);
+            //return Json(data, JsonRequestBehavior.AllowGet);
             string connectionString = ConfigurationManager.ConnectionStrings["LiteCommerceDB"].ConnectionString;
-            ICustomerDAL dal = new CustomerDAL(connectionString);
+            IEmployeeDAL dal = new EmployeeDAL(connectionString);
             var data = dal.List(page, pageSize, searchValue);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
