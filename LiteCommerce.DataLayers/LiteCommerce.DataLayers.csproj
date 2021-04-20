@@ -50,6 +50,8 @@
     <Compile Include="SQLServer\CityDAL.cs" />
     <Compile Include="SQLServer\CountryDAL.cs" />
     <Compile Include="SQLServer\EmployeeDAL.cs" />
+    <Compile Include="IShipperDAL.cs" />
+    <Compile Include="SQLServer\ShipperDAL.cs" />
     <Compile Include="SQLServer\SupplierDAL.cs" />
     <Compile Include="SQLServer\_BaseDAL.cs" />
   </ItemGroup>

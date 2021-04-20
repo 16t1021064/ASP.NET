@@ -21,14 +21,6 @@ namespace LiteCommerce.DataLayers.SQLServer
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        public List<Category> List()
-        {
-            return List(1,1,"");
-        }
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         public int Add(Category data)
