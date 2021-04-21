@@ -25,7 +25,22 @@ namespace LiteCommerce.DataLayers.SQLServer
         /// <returns></returns>
         public int Add(Category data)
         {
-            throw new NotImplementedException();
+            int categoryID = 0;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"insert into Categories(
+	                                 CategoryName, Description, ParentCategoryId
+                                    ) values(
+	                                CategoryName, Description, ParentCategoryId
+                                             );
+                                Select @@IDENTITY;";
+                cmd.Parameters.AddWithValue("@CategoryName", data.CategoryName);
+                cmd.Parameters.AddWithValue("@Description", data.Description);
+                cmd.Parameters.AddWithValue("@ParentCategoryId", data.ParentCategoryId);
+                categoryID = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            return categoryID;
         }
         /// <summary>
         /// 
@@ -34,7 +49,27 @@ namespace LiteCommerce.DataLayers.SQLServer
         /// <returns></returns>
         public int Count(string searchValue)
         {
-            throw new NotImplementedException();
+            if (searchValue != "")
+            {
+                searchValue = "%" + searchValue + "%";
+            }
+            int result = 0;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"Select count(*) from Categories
+                                        where (@searchValue= '')
+		                                    or(
+			                                    CategoryID like @searchValue
+			                                    or CategoryName like @searchValue
+			                                    or Description like @searchValue
+			                                    or ParentCategoryId like @searchValue
+			                                    )";
+                cmd.Parameters.AddWithValue("@searchValue", searchValue);
+                result = Convert.ToInt32(cmd.ExecuteScalar());
+                cn.Close();
+            }
+            return result;
         }
         /// <summary>
         /// 
@@ -43,13 +78,46 @@ namespace LiteCommerce.DataLayers.SQLServer
         /// <returns></returns>
         public bool Delete(int CategoryID)
         {
-            throw new NotImplementedException();
+            bool isDeleted = false;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"delete from Categories
+                                    where CategoryID = @CategoryID
+	                                    AND not exists(
+	                                    select * from Products
+		                                    where CategoryID = Categories.CategoryID
+	                                    )";
+                cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
+                isDeleted = cmd.ExecuteNonQuery() > 0;
+            }
+            return isDeleted;
         }
-
         public Category Get(int CategoryID)
         {
-            throw new NotImplementedException();
-        }
+            Category data = null;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"Select * from Categories where CategoryID = @CategoryID";
+                cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
+                using (SqlDataReader dbReader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection))
+                {
+                    if (dbReader.Read())
+                    {
+                        data = new Category()
+                        {
+                            CategoryID = Convert.ToInt32(dbReader["CategoryID"]),
+                            CategoryName = Convert.ToString(dbReader["CategoryName"]),
+                            Description = Convert.ToString(dbReader["Description"]),
+                            ParentCategoryId = Convert.ToInt32(dbReader["ParentCategoryId"])
+                        };
+                    }
+                   
+                }
+            }
+            return data;
+        } 
         /// <summary>
         /// 
         /// </summary>
@@ -108,7 +176,28 @@ namespace LiteCommerce.DataLayers.SQLServer
         /// <returns></returns>
         public bool Update(Category data)
         {
-            throw new NotImplementedException();
+            bool isUpdated = false;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"Update Suppliers
+                                    set CategoryName = @CategoryName,
+	                                    Description	=@Description,
+	                                    ParentCategoryID =@ParentCategoryID,
+	                                    Where CategoryID = @CategoryID
+	                                    ";
+                cmd.Parameters.AddWithValue("@SupplierName", data.SupplierName);
+                cmd.Parameters.AddWithValue("@ContactName", data.ContactName);
+                cmd.Parameters.AddWithValue("@Address", data.Address);
+                cmd.Parameters.AddWithValue("@City", data.City);
+                cmd.Parameters.AddWithValue("@PostalCode", data.PostalCode);
+                cmd.Parameters.AddWithValue("@Country", data.Country);
+                cmd.Parameters.AddWithValue("@Phone", data.Phone);
+                cmd.Parameters.AddWithValue("@SupplierID", data.SupplierID);
+
+                isUpdated = cmd.ExecuteNonQuery() > 0;
+            }
+            return isUpdated;
         }
     }
 }

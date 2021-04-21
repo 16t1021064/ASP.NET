@@ -16,8 +16,39 @@ namespace LiteCommerce.Admin.Controllers
         public ActionResult Index()
         {
             string connectionstring = ConfigurationManager.ConnectionStrings["litecommercedb"].ConnectionString;
-            ICityDAL dal = new CityDAL(connectionstring);
-            var data = dal.List();
+            //ICityDAL dal = new CityDAL(connectionstring);
+            //var data = dal.List();
+            //ISupplierDAL dal = new SupplierDAL(connectionstring);
+            //var data = dal.Count("11");
+            //ISupplierDAL dal = new SupplierDAL(connectionstring);
+            //var data = dal.Get(11);
+            //ISupplierDAL dal = new SupplierDAL(connectionstring);
+            //Supplier s = new Supplier
+            //{
+            //    SupplierName = "Võ Văn Huy",
+            //    ContactName = "hihi",
+            //    Address = "Quảng Trị",
+            //    City = "Huế",
+            //    PostalCode = "123",
+            //    Country="Việt Nam",
+            //    Phone="123456"
+            //};
+            //var data = dal.Add(s);
+            //ISupplierDAL dal = new SupplierDAL(connectionstring);
+            //var data = dal.Delete(32);
+            ISupplierDAL dal = new SupplierDAL(connectionstring);
+            Supplier s = new Supplier
+            {
+                SupplierID = 11,
+                SupplierName = "Võ Văn Huy",
+                ContactName = "hihi",
+                Address = "Quảng Trị",
+                City = "Huế",
+                PostalCode = "123",
+                Country = "Việt Nam",
+                Phone = "123456"
+            };
+            var data = dal.Update(s);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Pagination(int page, int pageSize,String searchValue)
@@ -26,10 +57,10 @@ namespace LiteCommerce.Admin.Controllers
             //ISupplierDAL dal = new SupplierDAL(connectionString);
             //var data = dal.List(page, pageSize, searchValue);
             //return Json(data, JsonRequestBehavior.AllowGet);
-            //string connectionString = ConfigurationManager.ConnectionStrings["LiteCommerceDB"].ConnectionString;
-            //ICategoryDAL dal = new CategoryDAL(connectionString);
-            //var data = dal.List(page, pageSize, searchValue);
-            //return Json(data, JsonRequestBehavior.AllowGet);
+            string connectionString = ConfigurationManager.ConnectionStrings["LiteCommerceDB"].ConnectionString;
+            ICategoryDAL dal = new CategoryDAL(connectionString);
+            var data = dal.List(page, pageSize, searchValue);
+            return Json(data, JsonRequestBehavior.AllowGet);
             //string connectionString = ConfigurationManager.ConnectionStrings["LiteCommerceDB"].ConnectionString;
             //IShipperDAL dal = new ShipperDAL(connectionString);
             //var data = dal.List(page, pageSize, searchValue);
@@ -38,10 +69,10 @@ namespace LiteCommerce.Admin.Controllers
             //ICustomerDAL dal = new CustomerDAL(connectionString);
             //var data = dal.List(page, pageSize, searchValue);
             //return Json(data, JsonRequestBehavior.AllowGet);
-            string connectionString = ConfigurationManager.ConnectionStrings["LiteCommerceDB"].ConnectionString;
-            IEmployeeDAL dal = new EmployeeDAL(connectionString);
-            var data = dal.List(page, pageSize, searchValue);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            //string connectionString = ConfigurationManager.ConnectionStrings["LiteCommerceDB"].ConnectionString;
+            //IEmployeeDAL dal = new EmployeeDAL(connectionString);
+            //var data = dal.List(page, pageSize, searchValue);
+            //return Json(data, JsonRequestBehavior.AllowGet);
         }
         // test URL: hTTP://localhost:/Test/Pagination?page=2&pageSize=10&SearchValue=
     }
