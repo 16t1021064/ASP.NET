@@ -25,7 +25,27 @@ namespace LiteCommerce.DataLayers.SQLServer
         /// <returns></returns>
         public int Add(Customer data)
         {
-            throw new NotImplementedException();
+            int customerID = 0;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"insert into Customers(
+	                                 CustomerName, ContactName, Address, City, PostalCode, Country, Email, Password
+                                    ) values(
+	                                @CustomerName, @ContactName, @Address, @City, @PostalCode, @Country, @Email, @Password
+                                             );
+                                Select @@IDENTITY;";
+                cmd.Parameters.AddWithValue("@CustomerName", data.CustomerName);
+                cmd.Parameters.AddWithValue("@ContactName", data.ContactName);
+                cmd.Parameters.AddWithValue("@Address", data.Address);
+                cmd.Parameters.AddWithValue("@City", data.City);
+                cmd.Parameters.AddWithValue("@PostalCode", data.PostalCode);
+                cmd.Parameters.AddWithValue("@Country", data.Country);
+                cmd.Parameters.AddWithValue("@Email", data.Email);
+                cmd.Parameters.AddWithValue("@Password", data.Password);
+                customerID = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            return customerID;
         }
         /// <summary>
         /// 
@@ -34,7 +54,27 @@ namespace LiteCommerce.DataLayers.SQLServer
         /// <returns></returns>
         public int Count(string searchValue)
         {
-            throw new NotImplementedException();
+            if (searchValue != "")
+            {
+                searchValue = "%" + searchValue + "%";
+            }
+            int result = 0;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"Select count(*) from Customers
+                                        where (@searchValue= '')
+		                                    or(
+			                                    CustomerName like @CustomerName
+			                                    or ContactName like @searchValue
+			                                    or Address like @searchValue
+			                                    or Email like @searchValue
+			                                    )";
+                cmd.Parameters.AddWithValue("@searchValue", searchValue);
+                result = Convert.ToInt32(cmd.ExecuteScalar());
+                cn.Close();
+            }
+            return result;
         }
         /// <summary>
         /// 
@@ -43,16 +83,55 @@ namespace LiteCommerce.DataLayers.SQLServer
         /// <returns></returns>
         public bool Delete(int CustomerID)
         {
-            throw new NotImplementedException();
+            bool isDeleted = false;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"delete from Customers
+                                    where CustomerID = @CustomerID
+	                                    AND not exists(
+	                                    select * from Orders
+		                                    where CustomerID = Customers.CustomerID
+	                                    )";
+                cmd.Parameters.AddWithValue("@CustomerID", CustomerID);
+                isDeleted = cmd.ExecuteNonQuery() > 0;
+            }
+            return isDeleted;
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="CustomerID"></param>
         /// <returns></returns>
-        public Customer Get(int CustomerID)
+        public Customer Get(int customerID)
         {
-            throw new NotImplementedException();
+            Customer data = null;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"Select * from Customers where CustomerID = @CustomerID";
+                cmd.Parameters.AddWithValue("@CustomerID", customerID);
+                using (SqlDataReader dbReader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection))
+                {
+                    if (dbReader.Read())
+                    {
+                        data = new Customer()
+                        {
+                            CustomerID = Convert.ToInt32(dbReader["CustomerID"]),
+                            CustomerName = Convert.ToString(dbReader["CustomerName"]),
+                            ContactName = Convert.ToString(dbReader["ContactName"]),
+                            Address = Convert.ToString(dbReader["Address"]),
+                            City = Convert.ToString(dbReader["City"]),
+                            PostalCode = Convert.ToString(dbReader["PostalCode"]),
+                            Country = Convert.ToString(dbReader["Country"]),
+                            Email = Convert.ToString(dbReader["Email"]),
+                            Password = Convert.ToString(dbReader["Password"])
+                        };
+                    }
+                }
+            }
+
+            return data;
         }
 
         public List<Customer> List(int page, int pageSize, string searchValue)
@@ -109,7 +188,34 @@ namespace LiteCommerce.DataLayers.SQLServer
 
         public bool Update(Customer data)
         {
-            throw new NotImplementedException();
+            bool isUpdated = false;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"Update Customers
+                                    set CustomerName = @CustomerName,
+	                                    ContactName	=@ContactName,
+	                                    Address =@Address,
+	                                    City = @City,
+	                                    PostalCode = @PostalCode,
+	                                    Country = @Country,
+	                                    Email = @Email,
+                                        Password = @Password
+	                                    Where CustomerID = @CustomerID
+	                                    ";
+                cmd.Parameters.AddWithValue("@CustomerName", data.CustomerName);
+                cmd.Parameters.AddWithValue("@ContactName", data.ContactName);
+                cmd.Parameters.AddWithValue("@Address", data.Address);
+                cmd.Parameters.AddWithValue("@City", data.City);
+                cmd.Parameters.AddWithValue("@PostalCode", data.PostalCode);
+                cmd.Parameters.AddWithValue("@Country", data.Country);
+                cmd.Parameters.AddWithValue("@Email", data.Email);
+                cmd.Parameters.AddWithValue("@Password", data.Password);
+                cmd.Parameters.AddWithValue("@CustomerID", data.CustomerID);
+
+                isUpdated = cmd.ExecuteNonQuery() > 0;
+            }
+            return isUpdated;
         }
     }
 }

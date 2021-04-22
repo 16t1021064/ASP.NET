@@ -32,7 +32,7 @@ namespace LiteCommerce.DataLayers.SQLServer
                 cmd.CommandText = @"insert into Categories(
 	                                 CategoryName, Description, ParentCategoryId
                                     ) values(
-	                                CategoryName, Description, ParentCategoryId
+	                                @CategoryName, @Description, @ParentCategoryId
                                              );
                                 Select @@IDENTITY;";
                 cmd.Parameters.AddWithValue("@CategoryName", data.CategoryName);
@@ -76,31 +76,31 @@ namespace LiteCommerce.DataLayers.SQLServer
         /// </summary>
         /// <param name="CategoryID"></param>
         /// <returns></returns>
-        public bool Delete(int CategoryID)
+        public bool Delete(int categoryID)
         {
             bool isDeleted = false;
             using (SqlConnection cn = GetConnection())
             {
                 SqlCommand cmd = cn.CreateCommand();
                 cmd.CommandText = @"delete from Categories
-                                    where CategoryID = @CategoryID
+                                    where CategoryID = @categoryID
 	                                    AND not exists(
 	                                    select * from Products
 		                                    where CategoryID = Categories.CategoryID
 	                                    )";
-                cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
+                cmd.Parameters.AddWithValue("@categoryID", categoryID);
                 isDeleted = cmd.ExecuteNonQuery() > 0;
             }
             return isDeleted;
         }
-        public Category Get(int CategoryID)
+        public Category Get(int categoryID)
         {
             Category data = null;
             using (SqlConnection cn = GetConnection())
             {
                 SqlCommand cmd = cn.CreateCommand();
-                cmd.CommandText = @"Select * from Categories where CategoryID = @CategoryID";
-                cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
+                cmd.CommandText = @"Select * from Categories where CategoryID = @categoryID";
+                cmd.Parameters.AddWithValue("@categoryID", categoryID);
                 using (SqlDataReader dbReader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection))
                 {
                     if (dbReader.Read())

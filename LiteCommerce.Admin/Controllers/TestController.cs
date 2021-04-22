@@ -36,15 +36,13 @@ namespace LiteCommerce.Admin.Controllers
             //var data = dal.Add(s);
             //ISupplierDAL dal = new SupplierDAL(connectionstring);
             //var data = dal.Delete(32);
-            ICategoryDAL dal = new CategoryDAL(connectionstring);
-            Category c = new Category
+            Shipper s = new Shipper
             {
-                CategoryID = 8,
-                CategoryName = "Võ Văn Huy",
-                Description="HI HI",
-                ParentCategoryId = 1
+                ShipperName = "heo",
+                Phone = "112341123"
             };
-            var data = dal.Update(c);
+            IShipperDAL dal = new ShipperDAL(connectionstring);
+            var data = dal.Add(s);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Pagination(int page, int pageSize,String searchValue)

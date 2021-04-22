@@ -108,7 +108,7 @@ namespace LiteCommerce.DataLayers.SQLServer
             using (SqlConnection cn = GetConnection())
             {
                 SqlCommand cmd = cn.CreateCommand();
-                cmd.CommandText = @"Select * from Suppliers where SupplierID = @SupplierID";
+                cmd.CommandText = @"Select * from Suppliers where SupplierID = @supplierID";
                 cmd.Parameters.AddWithValue("@supplierID", supplierID);
                 using (SqlDataReader dbReader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection))
                 {

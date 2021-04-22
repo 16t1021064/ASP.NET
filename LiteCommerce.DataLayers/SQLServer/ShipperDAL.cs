@@ -17,22 +17,88 @@ namespace LiteCommerce.DataLayers.SQLServer
 
         public int Add(Shipper data)
         {
-            throw new NotImplementedException();
+            int shipperID = 0;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"insert into Shippers(
+	                                 ShipperName, Phone
+                                    ) values(
+	                                @ShipperName, @Phone
+                                             );
+                                Select @@IDENTITY;";
+                cmd.Parameters.AddWithValue("@ShipperName", data.ShipperName);
+                cmd.Parameters.AddWithValue("@Phone", data.Phone);
+                shipperID = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            return shipperID;
         }
 
         public int Count(string searchValue)
         {
-            throw new NotImplementedException();
+            if (searchValue != "")
+            {
+                searchValue = "%" + searchValue + "%";
+            }
+            int result = 0;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"Select count(*) from Shippers
+                                        where (@searchValue= '')
+		                                    or(
+			                                    ShipperID like @searchValue
+			                                    or ShipperName like @searchValue
+			                                    or Phone like @searchValue
+			                                    )";
+                cmd.Parameters.AddWithValue("@searchValue", searchValue);
+                result = Convert.ToInt32(cmd.ExecuteScalar());
+                cn.Close();
+            }
+            return result;
         }
 
-        public bool Delete(int ShipperID)
+        public bool Delete(int shipperID)
         {
-            throw new NotImplementedException();
+            bool isDeleted = false;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"delete from Shippers
+                                    where ShipperID = @shipperID
+	                                    AND not exists(
+	                                    select * from Orders
+		                                    where ShipperID = Shippers.ShipperID
+	                                    )";
+                cmd.Parameters.AddWithValue("@shipperID", shipperID);
+                isDeleted = cmd.ExecuteNonQuery() > 0;
+            }
+            return isDeleted;
         }
 
-        public Shipper Get(int ShipperID)
+        public Shipper Get(int shipperID)
         {
-            throw new NotImplementedException();
+            Shipper data = null;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"Select * from Shippers where ShipperID = @shipperID";
+                cmd.Parameters.AddWithValue("@shipperID", shipperID);
+                using (SqlDataReader dbReader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection))
+                {
+                    if (dbReader.Read())
+                    {
+                        data = new Shipper()
+                        {
+                            ShipperID = Convert.ToInt32(dbReader["ShipperID"]),
+                            ShipperName = Convert.ToString(dbReader["ShipperName"]),
+                            Phone = Convert.ToString(dbReader["Phone"]),
+                        };
+                    }
+
+                }
+            }
+            return data;
         }
 
         public List<Shipper> List(int page, int pageSize, string searchValue)
@@ -81,7 +147,21 @@ namespace LiteCommerce.DataLayers.SQLServer
 
         public bool Update(Shipper data)
         {
-            throw new NotImplementedException();
+            bool isUpdated = false;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"Update Shippers
+                                    set ShipperName = @ShipperName,
+	                                    Phone	=@Phone
+	                                    Where ShipperID = @ShipperID
+	                                    ";
+                cmd.Parameters.AddWithValue("@ShipperName", data.ShipperName);
+                cmd.Parameters.AddWithValue("@Phone", data.Phone);
+                cmd.Parameters.AddWithValue("@ShipperID", data.ShipperID);
+                isUpdated = cmd.ExecuteNonQuery() > 0;
+            }
+            return isUpdated;
         }
-    }    
+    }
 }
