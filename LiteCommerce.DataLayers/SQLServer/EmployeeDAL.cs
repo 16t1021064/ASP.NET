@@ -23,22 +23,97 @@ namespace LiteCommerce.DataLayers.SQLServer
         }
         public int Add(Employee data)
         {
-            throw new NotImplementedException();
+            int employeeID = 0;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"insert into Employees(
+	                                LastName, FirstName, BirthDate, Photo, Notes, Email, Password
+                                    ) values(
+	                                @LastName, @FirstName, @BirthDate, @Photo, @Notes, @Email, @Password
+                                             );
+                                Select @@IDENTITY;";
+                cmd.Parameters.AddWithValue("@LastName", data.LastName);
+                cmd.Parameters.AddWithValue("@FirstName", data.FirstName);
+                cmd.Parameters.AddWithValue("@BirthDate", data.BirthDate);
+                cmd.Parameters.AddWithValue("@Photo", data.Photo);
+                cmd.Parameters.AddWithValue("@Notes", data.Notes);
+                cmd.Parameters.AddWithValue("@Email", data.Email);
+                cmd.Parameters.AddWithValue("@Password", data.Password);
+                employeeID = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            return employeeID;
         }
 
         public int Count(string searchValue)
         {
-            throw new NotImplementedException();
+            if (searchValue != "")
+            {
+                searchValue = "%" + searchValue + "%";
+            }
+            int result = 0;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"Select count(*) from Employees
+                                        where (@searchValue= '')
+		                                    or(
+			                                    LastName like @searchValue
+			                                    or FirstName like @searchValue
+			                                    or Email like @searchValue
+			                                    )";
+                cmd.Parameters.AddWithValue("@searchValue", searchValue);
+                result = Convert.ToInt32(cmd.ExecuteScalar());
+                cn.Close();
+            }
+            return result;
         }
 
-        public bool Delete(int EmployeeID)
+        public bool Delete(int employeeID)
         {
-            throw new NotImplementedException();
+            bool isDeleted = false;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"delete from Employees
+                                    where EmployeeID = @employeeID
+	                                    AND not exists(
+	                                    select * from Products
+		                                    where EmployeeID = Employees.EmployeeID
+	                                    )";
+                cmd.Parameters.AddWithValue("@employeeID", employeeID);
+                isDeleted = cmd.ExecuteNonQuery() > 0;
+            }
+            return isDeleted;
         }
 
-        public Employee Get(int EmployeeID)
+        public Employee Get(int employeeID)
         {
-            throw new NotImplementedException();
+            Employee data = null;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"Select * from Employees where EmployeeID = @employeeID";
+                cmd.Parameters.AddWithValue("@employeeID", employeeID);
+                using (SqlDataReader dbReader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection))
+                {
+                    if (dbReader.Read())
+                    {
+                        data = new Employee()
+                        {
+                            EmployeeID = Convert.ToInt32(dbReader["EmployeeID"]),
+                            FirstName = Convert.ToString(dbReader["FirstName"]),
+                            LastName = Convert.ToString(dbReader["LastName"]),
+                            Email = Convert.ToString(dbReader["Email"]),
+                            Notes = Convert.ToString(dbReader["Notes"]),
+                            Password = Convert.ToString(dbReader["Password"]),
+                            Photo = Convert.ToString(dbReader["Photo"]),
+                            BirthDate = Convert.ToDateTime(dbReader["BirthDate"])
+                        };
+                    }
+                }
+            }
+            return data;
         }
 
         public List<Employee> List(int page, int pageSize, string searchValue)
@@ -94,7 +169,31 @@ namespace LiteCommerce.DataLayers.SQLServer
 
         public bool Update(Employee data)
         {
-            throw new NotImplementedException();
+            bool isUpdated = false;
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"Update Employees
+                                    set LastName = @LastName,
+	                                    FirstName =@FirstName,
+                                        BirthDate =@BirthDate,
+                                        Photo =@Photo,
+                                        Notes =@Notes,
+                                        Email =@Email,
+                                        Password =@Password
+	                                    Where EmployeeID = @EmployeeID";
+                cmd.Parameters.AddWithValue("@LastName", data.LastName);
+                cmd.Parameters.AddWithValue("@FirstName", data.FirstName);
+                cmd.Parameters.AddWithValue("@BirthDate", data.BirthDate);
+                cmd.Parameters.AddWithValue("@Photo", data.Photo);
+                cmd.Parameters.AddWithValue("@Notes", data.Notes);
+                cmd.Parameters.AddWithValue("@Email", data.Email);
+                cmd.Parameters.AddWithValue("@Password", data.Password);
+                cmd.Parameters.AddWithValue("@EmployeeID", data.EmployeeID);
+
+                isUpdated = cmd.ExecuteNonQuery() > 0;
+            }
+            return isUpdated;
         }
     }
 }

@@ -99,7 +99,8 @@ namespace LiteCommerce.DataLayers.SQLServer
             using (SqlConnection cn = GetConnection())
             {
                 SqlCommand cmd = cn.CreateCommand();
-                cmd.CommandText = @"Select * from Categories where CategoryID = @categoryID";
+                cmd.CommandText = @"Select CategoryID, CategoryName,Description, ISNULL(ParentCategoryId, 0) as ParentCategoryId 
+                                    from Categories where CategoryID = @categoryID";
                 cmd.Parameters.AddWithValue("@categoryID", categoryID);
                 using (SqlDataReader dbReader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection))
                 {
