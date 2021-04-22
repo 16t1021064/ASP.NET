@@ -36,19 +36,15 @@ namespace LiteCommerce.Admin.Controllers
             //var data = dal.Add(s);
             //ISupplierDAL dal = new SupplierDAL(connectionstring);
             //var data = dal.Delete(32);
-            ISupplierDAL dal = new SupplierDAL(connectionstring);
-            Supplier s = new Supplier
+            ICategoryDAL dal = new CategoryDAL(connectionstring);
+            Category c = new Category
             {
-                SupplierID = 11,
-                SupplierName = "Võ Văn Huy",
-                ContactName = "hihi",
-                Address = "Quảng Trị",
-                City = "Huế",
-                PostalCode = "123",
-                Country = "Việt Nam",
-                Phone = "123456"
+                CategoryID = 8,
+                CategoryName = "Võ Văn Huy",
+                Description="HI HI",
+                ParentCategoryId = 1
             };
-            var data = dal.Update(s);
+            var data = dal.Update(c);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Pagination(int page, int pageSize,String searchValue)

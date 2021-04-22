@@ -180,20 +180,16 @@ namespace LiteCommerce.DataLayers.SQLServer
             using (SqlConnection cn = GetConnection())
             {
                 SqlCommand cmd = cn.CreateCommand();
-                cmd.CommandText = @"Update Suppliers
+                cmd.CommandText = @"Update Categories
                                     set CategoryName = @CategoryName,
 	                                    Description	=@Description,
-	                                    ParentCategoryID =@ParentCategoryID,
+	                                    ParentCategoryId =@ParentCategoryId
 	                                    Where CategoryID = @CategoryID
 	                                    ";
-                cmd.Parameters.AddWithValue("@SupplierName", data.SupplierName);
-                cmd.Parameters.AddWithValue("@ContactName", data.ContactName);
-                cmd.Parameters.AddWithValue("@Address", data.Address);
-                cmd.Parameters.AddWithValue("@City", data.City);
-                cmd.Parameters.AddWithValue("@PostalCode", data.PostalCode);
-                cmd.Parameters.AddWithValue("@Country", data.Country);
-                cmd.Parameters.AddWithValue("@Phone", data.Phone);
-                cmd.Parameters.AddWithValue("@SupplierID", data.SupplierID);
+                cmd.Parameters.AddWithValue("@CategoryName", data.CategoryName);
+                cmd.Parameters.AddWithValue("@Description", data.Description);
+                cmd.Parameters.AddWithValue("@ParentCategoryId", data.ParentCategoryId);
+                cmd.Parameters.AddWithValue("@CategoryID", data.CategoryID);
 
                 isUpdated = cmd.ExecuteNonQuery() > 0;
             }
