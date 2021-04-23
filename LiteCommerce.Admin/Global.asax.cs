@@ -19,6 +19,10 @@ namespace LiteCommerce.Admin
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["LiteCommerceDB"].ConnectionString;
             HRService.Init(DatabaseTypes.SQLServer, connectionString);
+            DataService.Init(DatabaseTypes.SQLServer, connectionString);
+            SaleService.Init(DatabaseTypes.SQLServer, connectionString);
+            ReportService.Init(DatabaseTypes.SQLServer, connectionString);
+            ProductService.Init(DatabaseTypes.SQLServer, connectionString);
         }
     }
 }

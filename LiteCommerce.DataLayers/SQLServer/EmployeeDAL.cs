@@ -78,7 +78,7 @@ namespace LiteCommerce.DataLayers.SQLServer
                 cmd.CommandText = @"delete from Employees
                                     where EmployeeID = @employeeID
 	                                    AND not exists(
-	                                    select * from Products
+	                                    select * from Orders
 		                                    where EmployeeID = Employees.EmployeeID
 	                                    )";
                 cmd.Parameters.AddWithValue("@employeeID", employeeID);

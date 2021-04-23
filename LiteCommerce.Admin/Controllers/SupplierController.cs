@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteCommerce.BusinessLayers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +10,31 @@ namespace LiteCommerce.Admin.Controllers
     public class SupplierController : Controller
     {
         // GET: Supplier
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, string searchValue = "")
         {
-            return View();
+            //int rowCount = 0;
+            //int pageSize = 10;
+            //var listOfSuppliers = DataService.ListSuppliers(page, 10, searchValue, out rowCount);
+            //int pageCount = rowCount / pageSize;
+            //if(rowCount % pageSize > 0)
+            //    pageCount += 1;
+            //ViewBag.Page = page;
+            //ViewBag.RowCount = rowCount;
+            //ViewBag.PageCount = pageCount;
+            //ViewBag.SearchValue = searchValue;
+            //return View(listOfSuppliers);
+            int rowCount = 0;
+            int pageSize = 10;
+            var listOfSuppliers = DataService.ListSuppliers(page, 10, searchValue, out rowCount);
+            Models.SupplierPaginationQueryResult model = new Models.SupplierPaginationQueryResult()
+            {
+                Page = page,
+                PageSize = pageSize,
+                SearchValue = searchValue,
+                RowCount = rowCount,
+                Data = listOfSuppliers,
+            };
+            return View(model);
         }
         public ActionResult Add()
         {
