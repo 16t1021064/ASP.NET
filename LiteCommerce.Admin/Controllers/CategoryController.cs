@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteCommerce.BusinessLayers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +10,20 @@ namespace LiteCommerce.Admin.Controllers
     public class CategoryController : Controller
     {
         // GET: Category
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, string searchValue = "")
         {
-            return View();
+            int rowCount = 0;
+            int pageSize = 10;
+            var listOfCategories = DataService.ListCategories(page, 10, searchValue, out rowCount);
+            Models.CategoryPaginationQueryResult model = new Models.CategoryPaginationQueryResult()
+            {
+                Page = page,
+                PageSize = pageSize,
+                SearchValue = searchValue,
+                RowCount = rowCount,
+                Data = listOfCategories
+            };
+            return View(model);
         }
         public ActionResult Add()
         {

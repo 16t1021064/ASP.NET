@@ -65,7 +65,7 @@ namespace LiteCommerce.DataLayers.SQLServer
                 cmd.CommandText = @"Select count(*) from Customers
                                         where (@searchValue= '')
 		                                    or(
-			                                    CustomerName like @CustomerName
+			                                    CustomerName like @searchValue
 			                                    or ContactName like @searchValue
 			                                    or Address like @searchValue
 			                                    or Email like @searchValue

@@ -25,7 +25,7 @@ namespace LiteCommerce.Admin.Controllers
             //return View(listOfSuppliers);
             int rowCount = 0;
             int pageSize = 10;
-            var listOfSuppliers = DataService.ListSuppliers(page, 10, searchValue, out rowCount);
+            var listOfSuppliers = DataService.ListSuppliers(page, pageSize, searchValue, out rowCount);
             Models.SupplierPaginationQueryResult model = new Models.SupplierPaginationQueryResult()
             {
                 Page = page,

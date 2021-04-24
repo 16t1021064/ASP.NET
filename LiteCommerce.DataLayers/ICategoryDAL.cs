@@ -20,7 +20,7 @@ namespace LiteCommerce.DataLayers
         /// lấy dánh sách các loại hàng(tìm kiếm, phân trang)
         /// </summary>
         /// <param name="page">Trang cần lấy dữ liệu</param>
-        /// <param name="pagSize">số dòng hiện thị trên mỗi trang</param>
+        /// <param name="pageSize">số dòng hiện thị trên mỗi trang</param>
         /// <param name="searchValue">giá trị cần tìm theo CategoryName (chuỗi rỗng nếu không tìm kiếm)
         /// </param>
         /// <returns></returns>

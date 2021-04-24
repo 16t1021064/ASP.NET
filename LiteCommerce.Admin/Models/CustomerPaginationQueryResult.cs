@@ -6,9 +6,8 @@ using System.Web;
 
 namespace LiteCommerce.Admin.Models
 {
-    public class SupplierPaginationQueryResult : BasePaginationQueryResult
+    public class CustomerPaginationQueryResult:BasePaginationQueryResult
     {
-        public List<Supplier> Data { get; set; }
-        
+        public List<Customer> Data { get; set; }
     }
 }

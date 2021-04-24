@@ -1,4 +1,5 @@
 ﻿using LiteCommerce.DataLayers;
+using LiteCommerce.DataLayers.SQLServer;
 using LiteCommerce.DomainModels;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,10 @@ namespace LiteCommerce.BusinessLayers
         private static ICountryDAL CountryDB;
         private static ICityDAL CityDB;
         private static ISupplierDAL SupplierDB;
+        private static ICategoryDAL CategoryDB;
+        private static ICustomerDAL CustomerDB;
+        private static IEmployeeDAL EmployeeDB;
+        private static IShipperDAL ShipperDB;
         /// <summary>
         /// Khởi tạo tính năng tác nghiệp(hàm này phải được gọi nếu muốn sử dụng các tính năng của lớp)
         /// </summary>
@@ -29,6 +34,10 @@ namespace LiteCommerce.BusinessLayers
                     CountryDB = new DataLayers.SQLServer.CountryDAL(connectionString);
                     CityDB = new DataLayers.SQLServer.CityDAL(connectionString);
                     SupplierDB = new DataLayers.SQLServer.SupplierDAL(connectionString);
+                    CategoryDB = new DataLayers.SQLServer.CategoryDAL(connectionString);
+                    EmployeeDB = new DataLayers.SQLServer.EmployeeDAL(connectionString);
+                    ShipperDB = new DataLayers.SQLServer.ShipperDAL(connectionString);
+                    CustomerDB = new DataLayers.SQLServer.CustomerDAL(connectionString);
                     break;
                 default:
                     throw new Exception("Database Type is not Supported");
@@ -107,6 +116,202 @@ namespace LiteCommerce.BusinessLayers
         public static Supplier GetSupplier(int supplierID)
         {
             return SupplierDB.Get(supplierID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="searchValue"></param>
+        /// <param name="rowCount"></param>
+        /// <returns></returns>
+        public static List<Category> ListCategories(int page, int pageSize, string searchValue, out int rowCount)
+        {
+            rowCount = CategoryDB.Count(searchValue);
+            return CategoryDB.List(page, pageSize, searchValue);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static int AddCategory(Category data)
+        {
+            return CategoryDB.Add(data);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool UpdateCategory(Category data)
+        {
+            return CategoryDB.Update(data);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="categoryID"></param>
+        /// <returns></returns>
+        public static bool DeleteCategory(int categoryID)
+        {
+            return CategoryDB.Delete(categoryID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="categoryID"></param>
+        /// <returns></returns>
+        public static Category GetCategory(int categoryID)
+        {
+            return CategoryDB.Get(categoryID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="searchValue"></param>
+        /// <param name="rowCount"></param>
+        /// <returns></returns>
+        public static List<Customer> ListCustomers(int page, int pageSize, string searchValue, out int rowCount)
+        {
+            rowCount = CustomerDB.Count(searchValue);
+            return CustomerDB.List(page, pageSize, searchValue);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static int AddCustomer(Customer data)
+        {
+            return CustomerDB.Add(data);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool UpdateCustomer(Customer data)
+        {
+            return CustomerDB.Update(data);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        public static bool DeleteCustomer(int customerID)
+        {
+            return CustomerDB.Delete(customerID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        public static Customer GetCustomer(int customerID)
+        {
+            return CustomerDB.Get(customerID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="searchValue"></param>
+        /// <param name="rowCount"></param>
+        /// <returns></returns>
+        public static List<Shipper> ListShippers(int page, int pageSize, string searchValue, out int rowCount)
+        {
+            rowCount = ShipperDB.Count(searchValue);
+            return ShipperDB.List(page, pageSize, searchValue);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static int AddShipper(Shipper data)
+        {
+            return ShipperDB.Add(data);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool UpdateShipper(Shipper data)
+        {
+            return ShipperDB.Update(data);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="shipperID"></param>
+        /// <returns></returns>
+        public static bool DeleteShipper(int shipperID)
+        {
+            return ShipperDB.Delete(shipperID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="shipperID"></param>
+        /// <returns></returns>
+        public static Shipper GetShipper(int shipperID)
+        {
+            return ShipperDB.Get(shipperID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="searchValue"></param>
+        /// <param name="rowCount"></param>
+        /// <returns></returns>
+        public static List<Employee> ListEmployees(int page, int pageSize, string searchValue, out int rowCount)
+        {
+            rowCount = EmployeeDB.Count(searchValue);
+            return EmployeeDB.List(page, pageSize, searchValue);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static int AddEmployee(Employee data)
+        {
+            return EmployeeDB.Add(data);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool UpdateEmployee(Employee data)
+        {
+            return EmployeeDB.Update(data);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="EmployeeID"></param>
+        /// <returns></returns>
+        public static bool DeleteEmployee(int EmployeeID)
+        {
+            return EmployeeDB.Delete(EmployeeID);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="EmployeeID"></param>
+        /// <returns></returns>
+        public static Employee GetEmployee(int EmployeeID)
+        {
+            return EmployeeDB.Get(EmployeeID);
         }
     }
 }
