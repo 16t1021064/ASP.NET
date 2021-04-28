@@ -1,4 +1,5 @@
 ﻿using LiteCommerce.BusinessLayers;
+using LiteCommerce.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,19 +28,74 @@ namespace LiteCommerce.Admin.Controllers
         }
         public ActionResult Add()
         {
-            return View();
+            ViewBag.title = "Thêm nhà vận chuyển";
+            Shipper model = new Shipper()
+            {
+                ShipperID = 0
+            };
+            return View("Edit", model);
         }
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.title = "Sửa thông tin nhà vận chuyển";
+            var model = DataService.GetShipper(id);
+            if (model == null)
+                RedirectToAction("Index");
+            return View(model);
         }
-        public ActionResult Delete(string id)
+        public ActionResult Save(Shipper data)
         {
-            return View();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(data.ShipperName))
+                {
+                    ModelState.AddModelError("ShipperName", "Vui lòng nhập tên nhà vận chuyển");
+                }
+                if (string.IsNullOrEmpty(data.Phone))
+                {
+                    data.Phone = "";
+                }
+                if (!ModelState.IsValid)
+                {
+                    if (data.ShipperID == 0)
+                        ViewBag.Title = "Thêm nhà vận chuyển";
+                    else
+                        ViewBag.Title = "Sửa thông tin nhà vận chuyển";
+                    return View("Edit", data);
+                }
+
+                //return Json(data);
+                if (data.ShipperID == 0)
+                {
+                    DataService.AddShipper(data);
+                }
+                else
+                {
+                    DataService.UpdateShipper(data);
+                }
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return Content("Trang này hình như không tồn tại");
+            }
         }
-        public ActionResult Save()
+        public ActionResult Delete(int id)
         {
-            return Redirect("Index");
+            if (Request.HttpMethod == "POST")
+            {
+                DataService.DeleteShipper(id);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var model = DataService.GetShipper(id);
+                if (model == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                return View(model);
+            }
         }
     }
 }

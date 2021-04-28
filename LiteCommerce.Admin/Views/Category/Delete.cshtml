@@ -1,23 +1,23 @@
-﻿
+﻿@model LiteCommerce.DomainModels.Category
 @{
     ViewBag.Title = "Xoá loại hàng";
 }
 
-<form class="form-horizontal" method="post" action="~/Category/Save">
+<form class="form-horizontal" method="post" action="~/Category/Delete/@Model.CategoryID">
     <div class="form-group">
         <label class="control-label col-sm-2">Tên loại hàng:</label>
         <div class="col-sm-10">
-            <p class="form-control-static">Nord-Ost-Fisch Handelsgesellschaft mbH</p>
+            <p class="form-control-static">@Model.CategoryName</p>
         </div>
 
         <label class="control-label col-sm-2">Mô tả:</label>
         <div class="col-sm-10">
-            <p class="form-control-static">Sven Petersen</p>
+            <p class="form-control-static">@Model.Description</p>
         </div>
 
         <label class="control-label col-sm-2">Thuộc loại hàng:</label>
         <div class="col-sm-10">
-            <p class="form-control-static">Frahmredder 112a</p>
+            <p class="form-control-static">@Model.ParentCategoryId</p>
         </div>
 
         <div class="row">

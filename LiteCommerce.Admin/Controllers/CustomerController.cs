@@ -1,4 +1,5 @@
 ﻿using LiteCommerce.BusinessLayers;
+using LiteCommerce.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,19 +28,97 @@ namespace LiteCommerce.Admin.Controllers
         }
         public ActionResult Add()
         {
-            return View();
+            ViewBag.title = "Thêm khách hàng";
+            Customer model = new Customer()
+            {
+                CustomerID = 0
+            };
+            return View("Edit", model);
         }
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.title = "Sửa thông tin khách hàng";
+            var model = DataService.GetCustomer(id);
+            if (model == null)
+                RedirectToAction("Index");
+            return View(model);
         }
-        public ActionResult Save()
+        public ActionResult Save(Customer data)
         {
-            return Redirect("Index");
+            try
+            {
+                if (string.IsNullOrWhiteSpace(data.CustomerName))
+                {
+                    ModelState.AddModelError("CustomerName", "Vui lòng nhập tên khách hàng");
+                }
+                if (string.IsNullOrWhiteSpace(data.ContactName))
+                {
+                    ModelState.AddModelError("ContactName", "Vui lòng nhập tên liên hệ");
+                }
+                if (string.IsNullOrEmpty(data.Address))
+                {
+                    data.Address = "";
+                }
+                if (string.IsNullOrEmpty(data.Country))
+                {
+                    data.Country = "";
+                }
+                if (string.IsNullOrEmpty(data.City))
+                {
+                    data.City = "";
+                }
+                if (string.IsNullOrEmpty(data.PostalCode))
+                {
+                    data.PostalCode = "";
+                }
+                if (string.IsNullOrEmpty(data.Email))
+                {
+                    data.Email = "";
+                }
+                if (string.IsNullOrEmpty(data.Password))
+                {
+                    data.Password = "1";
+                }
+                if (!ModelState.IsValid)
+                {
+                    if (data.CustomerID == 0)
+                        ViewBag.Title = "Thêm khách hàng";
+                    else
+                        ViewBag.Title = "Sửa thông tin khách hàng";
+                    return View("Edit", data);
+                }
+                
+                if (data.CustomerID == 0)
+                {
+                    DataService.AddCustomer(data);
+                }
+                else
+                {
+                    DataService.UpdateCustomer(data);
+                }
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return Content("Trang này hình như không tồn tại");
+            }
         }
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
-            return View();
+            if (Request.HttpMethod == "POST")
+            {
+                DataService.GetCustomer(id);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var model = DataService.GetCustomer(id);
+                if (model == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                return View(model);
+            }
         }
     }
 }

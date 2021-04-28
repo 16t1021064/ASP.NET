@@ -158,6 +158,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SelectListHelper.cs" />
     <Compile Include="Models\BasePaginationQueryResult.cs" />
     <Compile Include="Models\CategoryPaginationQueryResult.cs" />
     <Compile Include="Models\CustomerPaginationQueryResult.cs" />
@@ -240,6 +241,9 @@
     <Content Include="Views\Customer\Add.cshtml" />
     <Content Include="Views\Customer\Edit.cshtml" />
     <Content Include="Views\Customer\Delete.cshtml" />
+    <Content Include="Views\Employee\Add.cshtml" />
+    <Content Include="Views\Employee\Edit.cshtml" />
+    <Content Include="Views\Employee\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
