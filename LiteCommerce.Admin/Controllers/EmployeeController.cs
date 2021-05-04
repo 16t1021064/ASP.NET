@@ -1,7 +1,9 @@
 ﻿using LiteCommerce.BusinessLayers;
 using LiteCommerce.DomainModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -57,11 +59,7 @@ namespace LiteCommerce.Admin.Controllers
                 }
                 if (data.BirthDate == null)
                 {
-                    data.BirthDate = new DateTime(1/1/2000);
-                }
-                if (string.IsNullOrEmpty(data.Photo))
-                {
-                    data.Photo = "";
+                    data.BirthDate = new DateTime();
                 }
                 if (string.IsNullOrEmpty(data.Photo))
                 {
@@ -87,7 +85,6 @@ namespace LiteCommerce.Admin.Controllers
                         ViewBag.Title = "Sửa thông tin anh nhân viên";
                     return View("Edit", data);
                 }
-
                 return Json(data);
                 //if (data.EmployeeID == 0)
                 //{
@@ -99,9 +96,9 @@ namespace LiteCommerce.Admin.Controllers
                 //}
                 //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
-                return Content("Trang này hình như không tồn tại");
+                return Json(e.Message);
             }
         }
         public ActionResult Delete(int id)
