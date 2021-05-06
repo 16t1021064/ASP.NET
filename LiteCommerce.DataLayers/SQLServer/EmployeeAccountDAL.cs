@@ -102,5 +102,22 @@ namespace LiteCommerce.DataLayers.SQLServer
         {
             throw new NotImplementedException();
         }
+
+        public string getOldPaswword(string loginName)
+        {
+            string oldPassword = "";
+            using (SqlConnection connection = GetConnection())
+            {
+                SqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = @"select Password
+                                    from Employees
+                                    where Email = @loginName";
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@loginName", loginName);
+                oldPassword = cmd.ExecuteScalar().ToString();
+                connection.Close();
+            }
+            return oldPassword;
+        }
     }
 }

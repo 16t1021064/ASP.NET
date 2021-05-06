@@ -33,5 +33,10 @@ namespace LiteCommerce.DataLayers.SQLServer
         {
             throw new NotImplementedException();
         }
+
+        public string getOldPaswword(string loginName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

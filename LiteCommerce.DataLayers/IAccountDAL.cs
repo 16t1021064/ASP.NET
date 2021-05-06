@@ -34,5 +34,6 @@ namespace LiteCommerce.DataLayers
         /// <returns></returns>
         Account Get(string accountId);
         string getEmployeePhotoByEmail(string loginName);
+        string getOldPaswword(string loginName);
     }
 }
