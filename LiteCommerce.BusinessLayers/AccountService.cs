@@ -35,6 +35,10 @@ namespace LiteCommerce.BusinessLayers
         {
             return AccountDB.Authorize(loginName, password);
         }
+        public static string getEmployeePhotoByEmail(string loginName)
+        {
+            return AccountDB.getEmployeePhotoByEmail(loginName);
+        }
         public static bool ChangePassword(string accountId, string oldPassword, string newPassword)
         {
             return AccountDB.ChangePassword(accountId, oldPassword, newPassword);

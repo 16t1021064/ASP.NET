@@ -10,6 +10,7 @@ namespace LiteCommerce.Admin.Controllers
 {
     public class ShipperController : Controller
     {
+        [Authorize]
         // GET: Shipper
         public ActionResult Index(int page = 1, string searchValue = "")
         {

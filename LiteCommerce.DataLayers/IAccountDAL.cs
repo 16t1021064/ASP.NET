@@ -26,12 +26,13 @@ namespace LiteCommerce.DataLayers
         /// <param name="oldPassword"></param>
         /// <param name="newPassword"></param>
         /// <returns></returns>
-        bool ChangePassword(string accountId, string oldPassword, string newPassword);
+        bool ChangePassword(string loginName, string oldPassword, string newPassword);
         /// <summary>
         /// Lấy thông tin tài khoản theo ID
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
         Account Get(string accountId);
+        string getEmployeePhotoByEmail(string loginName);
     }
 }

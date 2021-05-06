@@ -36,19 +36,26 @@
                         {
                             account = CookieHelper.CookieStringToAccount(User.Identity.Name);
                         }
-                        
                     }
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="~/Themes/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                        <span class="hidden-xs">@account.FullName</span>
+                        @if (!"".Equals(Session["photoLink"]) && Session["photoLink"]!=null)
+                        {
+                            <img src="@Session["photoLink"]" class="user-image" alt="User Image">
+                            <span class="hidden-xs">@account.FullName</span>
+                        }
+                        
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="~/Themes/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                            <p>
-                                <span class="hidden-xs">@account.FullName</span>
-                            </p>
+                            @if(!"".Equals(Session["photoLink"]) && Session["photoLink"] != null)
+                            {
+                                <img src="@Session["photoLink"]" class="img-circle" alt="User Image">
+                                <p>
+                                    <span class="hidden-xs">@account.FullName</span>
+                                </p>
+                            };
+                           
                         </li>
                         <!-- Menu Body -->
                         <li class="user-body">

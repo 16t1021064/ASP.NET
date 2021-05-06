@@ -161,6 +161,7 @@
     </Compile>
     <Compile Include="Helpers\CookieHelper.cs" />
     <Compile Include="Helpers\CryptHelper.cs" />
+    <Compile Include="Helpers\PhotoLinkHelper.cs" />
     <Compile Include="Helpers\SelectListHelper.cs" />
     <Compile Include="Models\BasePaginationQueryResult.cs" />
     <Compile Include="Models\CategoryPaginationQueryResult.cs" />
@@ -248,6 +249,7 @@
     <Content Include="Views\Employee\Edit.cshtml" />
     <Content Include="Views\Employee\Delete.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

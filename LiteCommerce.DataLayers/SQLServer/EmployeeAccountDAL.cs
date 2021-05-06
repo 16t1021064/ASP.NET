@@ -66,7 +66,6 @@ namespace LiteCommerce.DataLayers.SQLServer
                 employeePhoto = cmd.ExecuteScalar().ToString();
                 connection.Close();
             }
-
             return employeePhoto;
         }
         /// <summary>
@@ -76,9 +75,23 @@ namespace LiteCommerce.DataLayers.SQLServer
         /// <param name="oldPassword"></param>
         /// <param name="newPassword"></param>
         /// <returns></returns>
-        public bool ChangePassword(string accountId, string oldPassword, string newPassword)
+        public bool ChangePassword(string loginName, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            bool isChanged = false;
+            using (SqlConnection connection = GetConnection())
+            {
+                SqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = @"UPDATE Employees
+                                    SET Password = @newPassword
+                                    WHERE Email= @loginName and Password =@oldPassword";
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@newPassword", newPassword);
+                cmd.Parameters.AddWithValue("@loginName", loginName);
+                cmd.Parameters.AddWithValue("@oldPassword", oldPassword);
+                isChanged = cmd.ExecuteNonQuery() > 0;
+                connection.Close();
+            }
+            return isChanged;
         }
         /// <summary>
         /// 

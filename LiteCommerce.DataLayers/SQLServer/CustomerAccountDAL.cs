@@ -28,5 +28,10 @@ namespace LiteCommerce.DataLayers.SQLServer
         {
             throw new NotImplementedException();
         }
+
+        public string getEmployeePhotoByEmail(string loginName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
